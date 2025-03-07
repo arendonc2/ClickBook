@@ -65,7 +65,9 @@ def survey(request):
     if request.method == 'POST':
         # Collect user preferences from the survey
         genre = request.POST.get('genre')
+        readings_size = request.POST.get('readings_size')
         favorite_authors = request.POST.getlist('favorite_authors')
+        fiction_type = request.POST.get('fiction_type')
         recent_books = request.POST.get('recent_books')
 
         # Here you would implement your recommendation logic
