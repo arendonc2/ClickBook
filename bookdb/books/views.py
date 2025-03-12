@@ -1,10 +1,12 @@
 # books/views.py
 import json
 import requests
+import pandas as pd
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
+
 
 def load_users():
     try:
@@ -67,35 +69,75 @@ def survey(request):
         genre = request.POST.get('genre')
         readings_size = request.POST.get('readings_size')
         favorite_authors = request.POST.getlist('favorite_authors')
+<<<<<<< Updated upstream
         fiction_type = request.POST.get('fiction_type')
         recent_books = request.POST.get('recent_books')
+=======
+        recent_books = request.POST.get('recent_books', '').split(',')
+>>>>>>> Stashed changes
 
-        # Here you would implement your recommendation logic
+        # Get recommended books based on user preferences
         recommended_books = recommend_books(genre, favorite_authors, recent_books)
 
         return render(request, 'recommendations.html', {'recommended_books': recommended_books})
 
     return render(request, 'survey.html')
 
-def recommend_books(genre, favorite_authors, recent_books):
-    # Placeholder for book recommendation logic
-    # You can replace this with actual logic to fetch books based on user preferences
-    recommended_books = []
+def fetch_books(genre):
+    """Fetch books from Google Books API based on genre."""
+    url = f'https://www.googleapis.com/books/v1/volumes?q=subject:{genre}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json().get('items', [])
+    return []
 
-    # Example logic: Fetch books from Google Books API based on genre
-    if genre:
-        url = f'https://www.googleapis.com/books/v1/volumes?q=subject:{genre}'
-        response = requests.get(url)
-        if response.status_code == 200:
-            data = response.json()
-            items = data.get('items', [])
-            for item in items:
-                book_info = {
-                    'title': item['volumeInfo'].get('title'),
-                    'authors': item['volumeInfo'].get('authors', []),
-                    'description': item['volumeInfo'].get('description', 'No description available.'),
-                    'link': item['volumeInfo'].get('infoLink')
-                }
-                recommended_books.append(book_info)
+def create_book_dataframe(books):
+    """Create a DataFrame from the list of books."""
+    book_data = []
+    for item in books:
+        book_info = {
+            'title': item['volumeInfo'].get('title'),
+            'authors': ', '.join(item['volumeInfo'].get('authors', [])),
+            'description': item['volumeInfo'].get('description', 'No description available.'),
+            'link': item['volumeInfo'].get('infoLink')
+        }
+        book_data.append(book_info)
+    return pd.DataFrame(book_data)
+
+def recommend_books(genre, favorite_authors, recent_books):
+    # Fetch books based on genre
+    books = fetch_books(genre)
+    if not books:
+        return []
+
+    # Create a DataFrame from the fetched books
+    book_df = create_book_dataframe(books)
+
+    # Combine favorite authors and recent books into a single string for better recommendations
+    user_profile = ' '.join(favorite_authors) + ' ' + ' '.join(recent_books)
+
+    # Create a TF-IDF Vectorizer and fit it on the book descriptions
+    tfidf = TfidfVectorizer(stop_words='english')
+    tfidf_matrix = tfidf.fit_transform(book_df['description'])
+
+    # Calculate the cosine similarity matrix
+    cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+
+    # Get the index of the user's profile (using a dummy book for the profile)
+    user_profile_vector = tfidf.transform([user_profile])
+    sim_scores = linear_kernel(user_profile_vector, tfidf_matrix).flatten()
+
+    # Get the indices of the top 10 most similar books
+    recommended_indices = sim_scores.argsort()[-10:][::-1]
+
+    # Create a list of recommended books with explanations
+    recommended_books = []
+    for idx in recommended_indices:
+        book_info = book_df.iloc[idx].to_dict()
+        explanation = f"You liked {genre} and {', '.join(favorite_authors)}. I recommend '{book_info['title']}' because it features themes of {genre} and has elements similar to your recent reads."
+        book_info['explanation'] = explanation
+        recommended_books.append(book_info)
 
     return recommended_books
+
+
