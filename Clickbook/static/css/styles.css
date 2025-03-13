@@ -1,0 +1,30 @@
+body {
+    background: linear-gradient(to bottom, #F5DEB3, #F5DEB3);
+    color: #8B5A2B;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    font-family: 'Lobster', cursive;
+    font-size: 32px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-label, .card-title, .card-text {
+    color: #8B5A2B;
+}
+
+.btn-primary {
+    background-color: #8B5A2B;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #704214;
+}
+
+.card {
+    border: none;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+}
