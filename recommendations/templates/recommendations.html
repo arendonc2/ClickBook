@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
-{% block content %}
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</head>
+{% load static %}
 
-<h1>¡Bienvenido a Recommendation!</h1>
+{% block content %}
+<div class="container text-center">
+    <h2>Get Book Recommendations</h2>
+    <p>If you're looking for book recommendations, take our survey!</p>
+    <a href="{% url 'survey' %}" class="btn btn-primary">Take the Survey</a>
+</div>
 {% endblock content %}

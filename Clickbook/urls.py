@@ -26,6 +26,7 @@ urlpatterns = [
     path('',Clickbook.home, name='home'),
     path('recommendations/', include('recommendations.urls')),
     path('account/', include('account.urls')),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
