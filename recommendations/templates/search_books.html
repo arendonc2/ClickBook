@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1 class="text-center">Search Results</h1>
+    <div class="text-center mb-3">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+    </div>
+
+    {% if books %}
+        <ul class="list-group">
+            {% for book in books %}
+                <li class="list-group-item">
+                    <h2 class="fw-bold">{{ book.volumeInfo.title }}</h2>
+                    
+                    {% if book.volumeInfo.authors %}
+                        <p><strong>Authors:</strong> {{ book.volumeInfo.authors|join:", " }}</p>
+                    {% else %}
+                        <p><strong>Authors:</strong> Unknown</p>
+                    {% endif %}
+                    
+                    {% if book.volumeInfo.description %}
+                        <p><strong>Description:</strong> {{ book.volumeInfo.description }}</p>
+                    {% else %}
+                        <p><strong>Description:</strong> No description available.</p>
+                    {% endif %}
+                    
+                    {% if book.volumeInfo.infoLink %}
+                        <a href="{{ book.volumeInfo.infoLink }}" target="_blank" class="btn btn-primary">More Info</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted text-center">No books found.</p>
+    {% endif %}
+</div>
+
+{% endblock content %}
