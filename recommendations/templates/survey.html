@@ -19,29 +19,29 @@
             <label for="genre" class="form-label">Preferred Genre:</label>
             <select name="genre" id="genre" class="form-select">
                 <option value="Fiction">Fiction</option>
-                <option value="Non-Fiction">Non-Fiction</option>
+                <option value="Non-Fiction">Horror</option>
                 <option value="Science Fiction">Science Fiction</option>
                 <option value="Fantasy">Fantasy</option>
                 <option value="Mystery">Mystery</option>
                 <option value="Biography">Biography</option>
+                <option value="Biography"> Romance</option>
+                <option value="Biography"> Self-help and personal Development</option>
             </select>
         </div>
 
         <div class="mb-3">
             <label for="readings_size" class="form-label">Reading Size:</label>
             <select name="readings_size" id="readings_size" class="form-select">
-                <option value="short_readings">Short Readings</option>
-                <option value="long_readings">Long Readings</option>
+                <option value="short_readings">Short reading (less than 50 pages)</option>
+                <option value="medium_readings">Medium reading (between 50 and 200 pages)</option>
+                <option value="long_readings">Long reading (more than 200 pages)</option>
             </select>
         </div>
 
         <div class="mb-3">
-            <label for="favorite_authors" class="form-label">Favorite Authors (select multiple):</label>
-            <select name="favorite_authors" id="favorite_authors" class="form-select" multiple>
-                <option value="Author1">Author 1</option>
-                <option value="Author2">Author 2</option>
-                <option value="Author3">Author 3</option>
-            </select>
+            <label for="favorite_authors" class="form-label">Favorite Authors:</label>
+            <input type="text" name="recent_books" id="recent_books" class="form-control" 
+                   placeholder="Enter authors separated by commas">
         </div>
 
         <div class="mb-3">
@@ -63,3 +63,4 @@
 </div>
 
 {% endblock content %}
+
