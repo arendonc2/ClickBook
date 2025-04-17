@@ -33,7 +33,7 @@ class Command(BaseCommand):
             "para crear un sistema de recomendación."
         )
 
-        books = Book.objects.all()[:100]
+        books = Book.objects.all()
         self.stdout.write(f" Se procesarán {books.count()} libros.")
 
         for book in books:

@@ -1,10 +1,6 @@
 /api_keys.env
-/openAI.env
-/DjangoProjectBase2/*
-/TutorialGoogle/*
-/movie_pictures/*
+/.env
 /open_ai_api_keys.env
 /.env
 /*.env
-/images.zip
-/DjangoProjectBase/openAI.env
+/Clickbook/openAI.env
