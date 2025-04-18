@@ -20,7 +20,7 @@
 
                             {% if user.is_authenticated %}
                            
-                                <form method="POST" action="{% url 'rate_book' %}" class="rating-form">
+                                <form method="POST" action="{% url 'Book_Recommendation' %}" class="rating-form">
                                     {% csrf_token %}
                                     <input type="hidden" name="book_id" value="{{ book.id }}">
                                     <input type="hidden" name="rating" class="rating-input" value="0">

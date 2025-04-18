@@ -6,9 +6,11 @@ from dotenv import load_dotenv
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
-from .models import BookRating
+from .models import BookRecommendation
 from book.models import Book
 import traceback
+from .models import UserPreference
+
 
 load_dotenv('.env')
 client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
@@ -32,6 +34,8 @@ def get_openai_embedding(text):
     return embedding
 
 
+from .models import UserPreference  
+
 def survey(request):
     if request.method == 'POST':
         genre = request.POST.get('genre')
@@ -47,12 +51,24 @@ def survey(request):
             f"Recently enjoyed books: {', '.join(recent_books)}."
         )
 
- 
         print(f"User profile text: {user_profile_text}")
-
 
         try:
             user_embedding = get_openai_embedding(user_profile_text)
+
+
+            if request.user.is_authenticated:
+                UserPreference.objects.update_or_create(
+                    user=request.user,
+                    defaults={
+                        'preferred_genres': genre,
+                        'preferred_length': readings_size,
+                        'favorite_authors': ', '.join(favorite_authors),
+                        'preferred_era': fiction_type,
+                        'liked_books': ', '.join(recent_books),
+                    }
+                )
+                print("✅ Preferencias guardadas")
 
             books = Book.objects.all()[:200]
             recommendations = []
@@ -60,7 +76,6 @@ def survey(request):
             for book in books:
                 try:
                     book_embedding = np.frombuffer(book.emb, dtype=np.float32)
-
                     if book_embedding.shape[0] != user_embedding.shape[0]:
                         print(f"Dimensión incompatible en el libro '{book.title}': {book_embedding.shape[0]}")
                         continue
@@ -74,20 +89,19 @@ def survey(request):
             recommendations.sort(key=lambda x: x[1], reverse=True)
             top_recommendations = recommendations[:12]
 
-            return render(request,'recommendationsBooks.html', {
+            return render(request, 'recommendationsBooks.html', {
                 'top_recommendations': top_recommendations
             })
 
-
         except Exception as e:
             print("❌ Error al generar el embedding del usuario:")
-            traceback.print_exc()  
-
+            traceback.print_exc()
 
     return render(request, 'survey.html')
 
+
 @login_required
-def rate_book(request):
+def Book_Recommendation(request):
     if request.method == 'POST':
         try:
             book_id = request.POST.get('book_id')
@@ -100,7 +114,7 @@ def rate_book(request):
             rating_value = int(rating_value)
 
         
-            BookRating.objects.update_or_create(
+            BookRecommendation.objects.update_or_create(
                 user=request.user,
                 book=book,
                 defaults={'rating': rating_value}

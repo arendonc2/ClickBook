@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import rate_book, survey, recommendationsBooks
+from .views import Book_Recommendation, survey, recommendationsBooks
 
 
 urlpatterns = [
     path('survey/', survey, name='survey'),
     path('recommendationsBooks/', recommendationsBooks, name='recommendationsBooks'),
-    path('rate_book/', rate_book, name='rate_book'),
+    path('Book_Recommendation/', Book_Recommendation, name='Book_Recommendation'),
 ]
