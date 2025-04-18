@@ -58,15 +58,13 @@ def survey(request):
 
 
             if request.user.is_authenticated:
-                UserPreference.objects.update_or_create(
+                UserPreference.objects.create(
                     user=request.user,
-                    defaults={
-                        'preferred_genres': genre,
-                        'preferred_length': readings_size,
-                        'favorite_authors': ', '.join(favorite_authors),
-                        'preferred_era': fiction_type,
-                        'liked_books': ', '.join(recent_books),
-                    }
+                    preferred_genres=genre,
+                    preferred_length=readings_size,
+                    favorite_authors=', '.join(favorite_authors),
+                    preferred_era=fiction_type,
+                    liked_books=', '.join(recent_books),
                 )
                 print("✅ Preferencias guardadas")
 
