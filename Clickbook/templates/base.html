@@ -42,6 +42,17 @@
             <a class="nav-link" href="{% url 'loginaccount' %}">Login</a>
             <a class="nav-link" href="{% url 'signupaccount' %}">Sign Up</a>
           {% endif %}
+          {% if user.is_authenticated %}
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Profile
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'history_of_recommendations' %}">History of recommendations</a></li>
+              <li><a class="dropdown-item" href="#">Select language (Not avaliable now)</a></li>
+            </ul>
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>

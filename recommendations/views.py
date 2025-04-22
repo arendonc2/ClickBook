@@ -105,27 +105,38 @@ def Book_Recommendation(request):
             book_id = request.POST.get('book_id')
             rating_value = request.POST.get('rating')
 
-            if not (book_id and rating_value):
-                return HttpResponseBadRequest("Datos incompletos")
+            if not book_id:
+                return HttpResponseBadRequest("ID del libro no proporcionado.")
 
             book = Book.objects.get(id=book_id)
-            rating_value = int(rating_value)
 
-        
+            # Si rating_value viene vacío o None, usar 0
+            try:
+                rating_value = int(rating_value)
+            except (ValueError, TypeError):
+                rating_value = 0
+
             BookRecommendation.objects.update_or_create(
                 user=request.user,
                 book=book,
                 defaults={'rating': rating_value}
             )
 
-            return redirect('recommendationsBooks')  
+            return redirect('recommendationsBooks')
 
         except Exception as e:
             print("Error al guardar calificación:", e)
             return HttpResponseBadRequest("Error al guardar calificación")
 
-    return HttpResponseBadRequest("Método no permitido") 
+    return HttpResponseBadRequest("Método no permitido")
 
 
+
+@login_required
+def history_of_recommendations(request):
+    recommendations = BookRecommendation.objects.filter(user=request.user).select_related('book')
+
+    return render(request, 'history_of_recommendations.html', {
+        'recommendations': recommendations})
 
 
