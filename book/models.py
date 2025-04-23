@@ -35,18 +35,6 @@ class Review(models.Model):
     def __str__(self):
         return f"Review by {self.user.username} on {self.book.title}"
     
-class Book(models.Model):
-    title = models.CharField(max_length=100)
-    author = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='book_images/', default='book_images/default_nia.jpg', blank=True, null=True)
-    genre = models.CharField(max_length=255, null=True, blank=True)
-    synopsis = models.TextField(blank=True, null=True)
-    url = models.URLField(null=True, blank=True)
-    emb = models.BinaryField(default=get_default_array())
-    
-    def __str__(self): 
-        return self.title
-    
 class FavoriteBook(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)

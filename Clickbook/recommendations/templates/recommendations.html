@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container text-center">
+    <h2>Get Book Recommendations</h2>
+    <p>If you're looking for book recommendations, take our survey!</p>
+    <a href="{% url 'survey' %}" class="btn btn-primary">Take the Survey</a>
+</div>
+{% endblock content %}
