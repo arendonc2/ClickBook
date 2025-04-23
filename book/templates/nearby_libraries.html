@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<div class="container mt-4">
+    <h2>📍 Librerías Cercanas</h2>
+    <div id="map" style="height: 500px; border: 1px solid #ccc;"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const map = L.map('map').setView([0, 0], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                map.setView([lat, lon], 15);
+
+                L.marker([lat, lon]).addTo(map)
+                    .bindPopup('Tu ubicación')
+                    .openPopup();
+
+                // Aquí podrías agregar librerías fijas o consultar una API externa para ubicaciones reales
+                const fakeLibraries = [
+                    { name: 'Librería Central', lat: lat + 0.002, lon: lon + 0.002 },
+                    { name: 'Books & Co', lat: lat - 0.003, lon: lon - 0.001 },
+                ];
+
+                fakeLibraries.forEach(lib => {
+                    L.marker([lib.lat, lib.lon]).addTo(map)
+                        .bindPopup(lib.name);
+                });
+            });
+        } else {
+            alert('La geolocalización no está disponible en tu navegador.');
+        }
+    });
+</script>
+{% endblock %}
