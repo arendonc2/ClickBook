@@ -1,0 +1,24 @@
+<!-- templates/recommendations.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommendations</title>
+</head>
+<body>
+    <h1>Recommended Books</h1>
+    <ul>
+        {% for book in recommended_books %}
+            <li>
+                <strong>{{ book.title }}</strong><br>
+                Authors: {{ book.authors|join:", " }}<br>
+                Description: {{ book.description }}<br>
+                <a href="{{ book.link }}" target="_blank">More Info</a </li>
+        {% empty %}
+            <li>No recommendations available based on your preferences.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'survey' %}">Take the survey again</a>
+</body>
+</html>

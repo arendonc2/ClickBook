@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <a href="{% url 'home' %}">Back to Home</a>
+    <ul>
+        {% for book in books %}
+            <li>
+                <h2>{{ book.volumeInfo.title }}</h2>
+                <p>Authors: {{ book.volumeInfo.authors|join:", " }}</p>
+                <p>Description: {{ book.volumeInfo.description }}</p>
+                <a href="{{ book.volumeInfo.infoLink }}" target="_blank">More Info</a>
+            </li>
+        {% empty %}
+            <li>No books found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
