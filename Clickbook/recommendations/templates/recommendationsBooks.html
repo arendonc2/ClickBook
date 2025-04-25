@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if recommended_books %}
+        <ul class="list-group">
+            {% for book in recommended_books %}
+                <li class="list-group-item">
+                    <strong>{{ book.title }}</strong><br>
+                    
+                    {% if book.authors %}
+                        <p><strong>Authors:</strong> {{ book.authors|join:", " }}</p>
+                    {% else %}
+                        <p><strong>Authors:</strong> Unknown</p>
+                    {% endif %}
+                    
+                    {% if book.description %}
+                        <p><strong>Description:</strong> {{ book.description }}</p>
+                    {% else %}
+                        <p><strong>Description:</strong> No description available.</p>
+                    {% endif %}
+
+                    {% if book.link %}
+                        <a href="{{ book.link }}" target="_blank" class="btn btn-primary">More Info</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted text-center">No recommendations available based on your preferences.</p>
+    {% endif %}
+
+    <div class="text-center mt-3">
+        <a href="{% url 'survey' %}" class="btn btn-secondary">Take the survey again</a>
+    </div>
+</div>
+{% endblock content %}
