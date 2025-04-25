@@ -1,6 +1,0 @@
-django
-Pillow
-pandas
-openai
-numpy
-python-dotenv
