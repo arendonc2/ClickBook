@@ -34,8 +34,6 @@ def get_openai_embedding(text):
     return embedding
 
 
-from .models import UserPreference  
-
 def survey(request):
     if request.method == 'POST':
         genre = request.POST.get('genre')

@@ -7,8 +7,8 @@ class BookRecommendation(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)  
 
-    def __str__(self): 
-        return self.book.title 
+    def __str__(self):
+        return f'{self.book.title} calificado por {self.user.username}'
 
 
 class UserPreference(models.Model):

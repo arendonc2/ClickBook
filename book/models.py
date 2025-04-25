@@ -27,8 +27,8 @@ class FavoriteBook(models.Model):
         return f"{self.user.username} - {self.book.title}"
 
 class Review(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
