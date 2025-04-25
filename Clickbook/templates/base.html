@@ -8,21 +8,23 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
   {% block extra_css %}{% endblock %}
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}">
+
+      <!-- Logo y Home -->
+      <a class="navbar-brand d-flex align-items-center me-3" href="{% url 'home' %}">
         <img src="{% static 'images/ClickBook_.png' %}" 
-             alt="" 
-             width="30" 
-             height="24" 
-             class="d-inline-block align-text-top" />
-        Home
+             alt="ClickBook Logo" 
+             style="height: 55px;" 
+             class="me-2" />
+        <span>Home</span>
       </a>
+
+      <!-- Botón responsive -->
       <button class="navbar-toggler" 
               type="button" 
               data-bs-toggle="collapse" 
@@ -33,37 +35,43 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      <!-- Enlaces, pegaditos al logo -->
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="{% url 'survey' %}">Obtain recommendations</a>
+        <div class="navbar-nav d-flex align-items-center">
+
+          <a class="nav-link" href="{% url 'survey' %}">Obtain recommendations</a>
           <a class="nav-link" href="{% url 'favorite_books' %}">Favorite Books</a>
+
           {% if user.is_authenticated %}
             <a class="nav-link" href="{% url 'logoutaccount' %}">Logout ({{ user.username }})</a>
+
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                 data-bs-toggle="dropdown" aria-expanded="false">
+                Profile
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'history_of_recommendations' %}">History of recommendations</a></li>
+                <li><a class="dropdown-item" href="#">Select language (Not available now)</a></li>
+              </ul>
+            </div>
+
           {% else %}
             <a class="nav-link" href="{% url 'loginaccount' %}">Login</a>
             <a class="nav-link" href="{% url 'signupaccount' %}">Sign Up</a>
           {% endif %}
-          {% if user.is_authenticated %}
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Profile
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'history_of_recommendations' %}">History of recommendations</a></li>
-              <li><a class="dropdown-item" href="#">Select language (Not avaliable now)</a></li>
-            </ul>
-          </div>
-          {% endif %}
+
         </div>
       </div>
+
     </div>
   </nav>
+
   <div class="d-flex justify-content-end align-items-center mt-2 me-3">
     <a href="{% url 'nearby_libraries' %}" class="btn btn-outline-success me-2">
       📍 Ver librerías cercanas
     </a>
   </div>
-  
 
   <div class="container">
     {% block content %}
