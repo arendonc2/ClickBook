@@ -1,6 +1,6 @@
 body {
-    background: linear-gradient(to bottom, #F5DEB3, #F5DEB3);
-    color: #8B5A2B;
+    background: linear-gradient(to bottom, #B5B295, #B5B295);
+    color: #2C2C2C;
     font-family: Arial, sans-serif;
 }
 
@@ -12,16 +12,16 @@ body {
 }
 
 .form-label, .card-title, .card-text {
-    color: #8B5A2B;
+    color: #1A1A1A;
 }
 
 .btn-primary {
-    background-color: #8B5A2B;
+    background-color: #C26A29;
     border: none;
 }
 
 .btn-primary:hover {
-    background-color: #704214;
+    background-color: #A8521F;
 }
 
 .card {
