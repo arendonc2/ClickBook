@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Buscar disponibilidad de libros</h2>
+
+  <form method="post" class="mb-4">
+    {% csrf_token %}
+    <div class="input-group">
+      {{ form.book_name }}
+      <button type="submit" class="btn btn-primary">🔍 Buscar</button>
+    </div>
+  </form>
+
+  {% if availability_data %}
+    <div class="card mb-4 shadow-sm">
+      <div class="row g-0">
+        <div class="col-md-3 text-center p-3">
+          {% if availability_data.image_url %}
+            <img src="{{ availability_data.image_url }}" class="img-fluid rounded" alt="Imagen del libro">
+          {% else %}
+            <img src="{% static 'images/default_nia.jpg' %}" class="img-fluid rounded" alt="Sin imagen">
+          {% endif %}
+        </div>
+        <div class="col-md-9">
+          <div class="card-body">
+            <h5 class="card-title">{{ availability_data.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Autor: {{ availability_data.authors|join:", " }}</h6>
+            {% if availability_data.year %}
+              <p class="card-text"><strong>Año:</strong> {{ availability_data.year }}</p>
+            {% endif %}
+            {% if availability_data.synopsis %}
+              <p class="card-text"><strong>Sinopsis:</strong> {{ availability_data.synopsis }}</p>
+            {% endif %}
+            <p class="card-text">
+              <strong>Disponibilidad:</strong> {{ availability_data.availability }}
+            </p>
+            {% if availability_data.url %}
+              <a href="{{ availability_data.url }}" class="btn btn-outline-success" target="_blank">Ver en Open Library</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% elif availability_info %}
+    <!-- fallback si solo es un string simple -->
+    <div class="alert alert-info">{{ availability_info }}</div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book, FavoriteBook, Review
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from .forms import BookSearchForm
+import requests
+from bs4 import BeautifulSoup
 
 def home(request):
     searchTerm = request.GET.get('searchBook')
@@ -82,3 +85,49 @@ def toggle_favorite(request, book_id):
         except Book.DoesNotExist:
             return JsonResponse({'status': 'not_found'}, status=404)
     return JsonResponse({'status': 'unauthenticated'}, status=401)
+
+def check_open_library_availability(book_title):
+    search_url = f"https://openlibrary.org/search.json?q={book_title.replace(' ', '+')}"
+    response = requests.get(search_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        if 'docs' in data and data['docs']:
+            book = data['docs'][0]
+
+            return {
+                'title': book.get('title', 'No title'),
+                'authors': book.get('author_name', ['Desconocido']),
+                'year': book.get('first_publish_year'),
+                'availability': 'Disponible para préstamo' if 'key' in book else 'Sin información',
+                'url': f"https://openlibrary.org{book.get('key')}" if book.get('key') else None,
+                'image_url': f"https://covers.openlibrary.org/b/id/{book.get('cover_i')}-L.jpg" if book.get('cover_i') else None,
+                'synopsis': book.get('first_sentence', [''])[0] if isinstance(book.get('first_sentence'), list) else book.get('first_sentence')
+            }
+        else:
+            return None
+    else:
+        return None
+
+
+def book_search(request):
+    if request.method == 'POST':
+        form = BookSearchForm(request.POST)
+        if form.is_valid():
+            book_name = form.cleaned_data['book_name']
+            availability_data = check_open_library_availability(book_name)
+
+            if availability_data:
+                return render(request, 'book_search.html', {
+                    'form': form,
+                    'availability_data': availability_data
+                })
+            else:
+                return render(request, 'book_search.html', {
+                    'form': form,
+                    'availability_info': 'No se encontraron resultados.'
+                })
+    else:
+        form = BookSearchForm()
+
+    return render(request, 'book_search.html', {'form': form})
