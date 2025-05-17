@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load static %} 
+{% load static %}
+{% load custom_tags %}
 {% block content %}
 <head>
     <meta name="csrf-token" content="{{ csrf_token }}">
@@ -12,6 +13,7 @@
     <h1 class="title">For every curious mind, we find a story waiting to be read.</h1>
     <h1 class="title">Discover the perfect book for every moment</h1>
 
+    
     <form action="" class="mt-4">
         <div class="mb-3">
             <label for="searchBook" class="form-label">Search for Book:</label>
@@ -26,6 +28,7 @@
         {% for book in books %}
         <div class="col">
             <div class="card">
+               
                 {% if book.image and book.image.url %}
                     <img class="card-img-top" src="{{ book.image.url }}" alt="{{ book.title }}">
                 {% else %}
@@ -36,14 +39,29 @@
                     <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
                     <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
                     <p class="card-text"><strong>Synopsis:</strong> {{ book.synopsis }}</p>
+                    
+                   
                     <a href="{% url 'book_reviews' book.id %}" class="btn btn-primary">View Reviews</a>
                     {% if book.url %}
                         <a href="{{ book.url }}" class="btn btn-primary">Book Link</a>
                     {% endif %}
+
                     {% if user.is_authenticated %}
-                    <button class="btn favorite-button {% if book.id in favorite_book_ids %}btn-danger{% else %}btn-outline-danger{% endif %}" data-book-id="{{ book.id }}">
-                        {% if book.id in favorite_book_ids %}❤️{% else %}🤍{% endif %}
-                    </button>
+                       
+                        <button class="btn favorite-button {% if book.id in favorite_book_ids %}btn-danger{% else %}btn-outline-danger{% endif %}" data-book-id="{{ book.id }}">
+                            {% if book.id in favorite_book_ids %}❤️{% else %}🤍{% endif %}
+                        </button>
+
+                        
+                        <div class="mt-2">
+                            <label for="status-select-{{ book.id }}" class="form-label">Reading Status:</label>
+                            <select class="form-select book-status-select" data-book-id="{{ book.id }}">
+                                <option value="" {% if not book_statuses|get_item:book.id %}selected{% endif %}>Choose status</option>
+                                <option value="to_read" {% if book_statuses|get_item:book.id == 'to_read' %}selected{% endif %}>To Read</option>
+                                <option value="reading" {% if book_statuses|get_item:book.id == 'reading' %}selected{% endif %}>Reading</option>
+                                <option value="read" {% if book_statuses|get_item:book.id == 'read' %}selected{% endif %}>Read</option>
+                            </select>
+                        </div>
                     {% endif %}
                 </div>
             </div>
@@ -52,10 +70,12 @@
     </div>
 </div>
 
+<!-- Script JS para favoritos y estado de lectura -->
 <script>
     $(document).ready(function() {
         const csrftoken = $('meta[name="csrf-token"]').attr('content');
 
+      
         $('.favorite-button').click(function() {
             const button = $(this);
             const bookId = button.data('book-id');
@@ -79,7 +99,32 @@
                 }
             });
         });
-    });
 
+       
+        $('.book-status-select').change(function() {
+            const bookId = $(this).data('book-id');
+            const selectedStatus = $(this).val();
+            const csrfToken = $('[name=csrfmiddlewaretoken]').val() || $('meta[name=csrf-token]').attr('content');
+
+            $.ajax({
+                url: "{% url 'set_book_status' 0 %}".replace("0",bookId),
+                type: 'POST',
+                data: {
+                    'status': selectedStatus,
+                    'csrfmiddlewaretoken': csrfToken
+                },
+                success: function(response) {
+                    if (response.status === 'ok') {
+                        alert('¡El estado del libro se ha guardado con éxito!');
+                    } else {
+                        alert('Ocurrió un error al guardar el estado.');
+                    }
+                },
+                error: function() {
+                    alert('Error al conectar con el servidor.');
+                }
+            });
+        });
+    });
 </script>
 {% endblock content %}

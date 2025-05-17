@@ -35,3 +35,22 @@ class Review(models.Model):
     def __str__(self):
         return f"Review by {self.user.username} on {self.book.title}"
     
+
+class BookStatus(models.Model):
+    STATUS_CHOICES = [
+        ('to_read', 'To read'), # Por leer
+        ('reading', 'Reading'),  # Leyendo 
+        ('read', 'Read'),  # Leído
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+
+    class Meta:
+        unique_together = ('user', 'book')  # Evita duplicados
+
+    def __str__(self):
+        return f"{self.user.username} - {self.book.title} ({self.status})"
+
+

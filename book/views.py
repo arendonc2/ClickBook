@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book, FavoriteBook, Review
+from .models import Book, FavoriteBook, Review, BookStatus
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .forms import BookSearchForm
 import requests
-from bs4 import BeautifulSoup
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     searchTerm = request.GET.get('searchBook')
@@ -15,19 +15,22 @@ def home(request):
         books = Book.objects.all()
 
     favorite_book_ids = []
+    book_statuses = {}
     if request.user.is_authenticated:
         favorite_books = FavoriteBook.objects.filter(user=request.user)
         favorite_book_ids = [fav.book.id for fav in favorite_books]
+
+       
+        statuses = BookStatus.objects.filter(user=request.user, book__in=books)
+        book_statuses = {bs.book.id: bs.status for bs in statuses}
 
     return render(request, "home.html", {
         "searchTerm": searchTerm,
         "books": books,
         "favorite_book_ids": favorite_book_ids,
+        "book_statuses": book_statuses,  
     })
 
-
-def nearby_libraries(request):
-    return render(request, 'nearby_libraries.html')
 
 def favorite_books(request):
     if request.user.is_authenticated:
@@ -42,11 +45,11 @@ def favorite_books(request):
 
 
 def book_reviews(request, book_id):
-    # Get the book object or return a 404 if it doesn't exist
+    
     book = get_object_or_404(Book, id=book_id)
     
-    # Retrieve reviews for the book
-    reviews = Review.objects.filter(book=book).select_related('user')  # Assuming you want to show user info
+   
+    reviews = Review.objects.filter(book=book).select_related('user')  
 
     return render(request, 'book_reviews.html', {
         'book': book,
@@ -55,7 +58,7 @@ def book_reviews(request, book_id):
 
 @require_POST
 def delete_review(request, review_id):
-    print(f"Attempting to delete review with ID: {review_id}")  # Debugging line
+    print(f"Attempting to delete review with ID: {review_id}")  
     if request.user.is_authenticated:
         review = get_object_or_404(Review, id=review_id, user=request.user)
         review.delete()
@@ -69,7 +72,7 @@ def add_review(request, book_id):
         book = get_object_or_404(Book, id=book_id)
         if content:
             Review.objects.create(user=request.user, book=book, content=content)
-        return redirect('book_reviews', book_id=book.id)  # <- nombre correcto
+        return redirect('book_reviews', book_id=book.id)  
     return redirect('login')
 
 @require_POST
@@ -131,3 +134,36 @@ def book_search(request):
         form = BookSearchForm()
 
     return render(request, 'book_search.html', {'form': form})
+
+
+@login_required
+@require_POST
+def set_book_status(request, book_id):
+    status = request.POST.get('status')
+    if status not in ['to_read', 'reading', 'read']:
+        return JsonResponse({'status': 'invalid_status'}, status=400)
+
+    book = get_object_or_404(Book, id=book_id)
+    BookStatus.objects.update_or_create(
+        user=request.user,
+        book=book,
+        defaults={'status': status}
+    )
+    return JsonResponse({'status': 'ok'})
+
+
+@login_required
+def book_status_list(request):
+    statuses = BookStatus.objects.filter(user=request.user).select_related('book')
+    books_by_status = {
+        'to_read': [],
+        'reading': [],
+        'read': [],
+    }
+
+    for bs in statuses:
+        books_by_status[bs.status].append(bs.book)
+
+    return render(request, 'book_status_list.html', {
+        'books_by_status': books_by_status
+    })

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-5 text-center"> Your Book Status</h1>
+
+    {% for status, books in books_by_status.items %}
+        <div class="my-5">
+            <h2 class="section-title display-5 fw-bold text-dark mb-4">
+                {% if status == 'to_read' %}
+                    📘 To Read
+                {% elif status == 'reading' %}
+                    📖 Reading
+                {% elif status == 'read' %}
+                    📕 Read
+                {% endif %}
+            </h2>
+
+            {% if books %}
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                    {% for book in books %}
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0">
+                            {% if book.image and book.image.url %}
+                                <img src="{{ book.image.url }}" class="card-img-top" alt="{{ book.title }}">
+                            {% else %}
+                                <img src="{% static 'book_images/default_nia.jpg' %}" class="card-img-top" alt="{{ book.title }}">
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <h6 class="card-title fw-semibold">{{ book.title }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">Aún no hay libros para esta sección.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

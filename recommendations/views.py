@@ -1,3 +1,5 @@
+import base64
+import json
 from django.shortcuts import render
 from openai import OpenAI
 import os
@@ -6,10 +8,12 @@ from dotenv import load_dotenv
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
-from .models import BookRecommendation
-from book.models import Book
+from .models import BookRecommendation,Book, UserPreference
 import traceback
 from .models import UserPreference
+from django.http import HttpResponse
+from django.urls import reverse
+from django.utils.http import urlencode
 
 
 load_dotenv('.env')
@@ -33,7 +37,6 @@ def get_openai_embedding(text):
     
     return embedding
 
- 
 
 def survey(request):
     if request.method == 'POST':
@@ -54,7 +57,6 @@ def survey(request):
 
         try:
             user_embedding = get_openai_embedding(user_profile_text)
-
 
             if request.user.is_authenticated:
                 UserPreference.objects.create(
@@ -86,8 +88,15 @@ def survey(request):
             recommendations.sort(key=lambda x: x[1], reverse=True)
             top_recommendations = recommendations[:12]
 
+           
+            ids = [str(book.id) for book, _ in top_recommendations]
+            encoded = base64.urlsafe_b64encode(json.dumps(ids).encode()).decode()
+            share_url = request.build_absolute_uri(reverse('shared_recommendations')) + '?' + urlencode({'data': encoded})
+
+            
             return render(request, 'recommendationsBooks.html', {
-                'top_recommendations': top_recommendations
+                'top_recommendations': top_recommendations,
+                'share_url': share_url
             })
 
         except Exception as e:
@@ -109,7 +118,7 @@ def Book_Recommendation(request):
 
             book = Book.objects.get(id=book_id)
 
-            # Si rating_value viene vacío o None, usar 0
+           
             try:
                 rating_value = int(rating_value)
             except (ValueError, TypeError):
@@ -139,3 +148,22 @@ def history_of_recommendations(request):
         'recommendations': recommendations})
 
 
+def shared_recommendations(request):
+    data = request.GET.get('data')
+    if not data:
+        return HttpResponseBadRequest("No data provided.")
+
+    try:
+        decoded = base64.urlsafe_b64decode(data.encode()).decode()
+        ids = json.loads(decoded)
+        books = Book.objects.filter(id__in=ids)
+
+       
+        return render(request, 'recommendationsBooks.html', {
+            'top_recommendations': [(book, 1.0) for book in books],  
+            'shared': True
+        })
+
+    except Exception as e:
+        print("❌ Error al procesar enlace compartido:", e)
+        return HttpResponse("Invalid or corrupted link.")
