@@ -49,7 +49,7 @@
             <a class="nav-link" href="{% url 'book_status_list' %}">{%trans "Book Status" %}</a>
            
 
-            <a class="nav-link" href="{% url 'logoutaccount' %}">{%trans "Logout" ({{ user.username }}) %}</a>
+            <a class="nav-link" href="{% url 'logoutaccount' %}">{%trans "Logout" %}({{ user.username }})</a>
 
             <div class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
@@ -58,6 +58,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="{% url 'history_of_recommendations' %}">{%trans "History of recommendations" %}</a></li>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
                 <li><a class="dropdown-item" href="#">{%trans "Select language (Not available now)" %}</a></li>
               </ul>
             </div>

@@ -1,0 +1,315 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-20 11:55-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+#: .\Clickbook\settings.py:124
+msgid "English"
+msgstr "Inglés"
+
+#: .\Clickbook\settings.py:125
+msgid "Spanish"
+msgstr "Español"
+
+#: .\Clickbook\templates\base.html:25
+msgid "Home"
+msgstr "Inicio"
+
+#: .\Clickbook\templates\base.html:43
+msgid "Obtain recommendations"
+msgstr "Obtener recomendaciones"
+
+#: .\Clickbook\templates\base.html:44
+msgid "Favorite Books"
+msgstr "Libros favoritos"
+
+#: .\Clickbook\templates\base.html:45
+msgid "Disponibilidad de libro"
+msgstr "Disponibilidad de libro"
+
+#: .\Clickbook\templates\base.html:49
+msgid "Book Status"
+msgstr "Estado del libro"
+
+#: .\Clickbook\templates\base.html:52
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+#: .\Clickbook\templates\base.html:57
+msgid "Profile"
+msgstr "Perfil"
+
+#: .\Clickbook\templates\base.html:60
+msgid "History of recommendations"
+msgstr "Historial de recomendaciones"
+
+#: .\Clickbook\templates\base.html:61
+msgid "Select language (Not available now)"
+msgstr "Seleccionar idioma (No disponible ahora)"
+
+#: .\Clickbook\templates\base.html:66 .\account\templates\loginaccount.html:19
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: .\Clickbook\templates\base.html:67
+msgid "Sign Up"
+msgstr "Registrarse"
+
+#: .\account\templates\loginaccount.html:9
+msgid "Welcome to Clickbook"
+msgstr "Bienvenido a Clickbook"
+
+#: .\account\templates\signupaccount.html:9
+msgid "Register to Clickbook"
+msgstr "Registrarse en Clickbook"
+
+#: .\account\templates\signupaccount.html:20
+msgid "Register"
+msgstr "Registrar"
+
+#: .\book\templates\book_reviews.html:12
+#: .\book\templates\favorite_books.html:14 .\book\templates\home.html:40
+msgid "Author:"
+msgstr "Autor"
+
+#: .\book\templates\book_reviews.html:13 .\book\templates\home.html:41
+#: .\recommendations\templates\recommendationsBooks.html:18
+msgid "Genre:"
+msgstr "Genero"
+
+#: .\book\templates\book_reviews.html:14 .\book\templates\book_search.html:34
+#: .\book\templates\home.html:42
+#: .\recommendations\templates\recommendationsBooks.html:17
+msgid "Synopsis:"
+msgstr "Sinopsis"
+
+#: .\book\templates\book_reviews.html:23
+msgid "Reviews"
+msgstr "Reseñas"
+
+#: .\book\templates\book_reviews.html:30
+msgid "Posted on "
+msgstr "Publicado en"
+
+#: .\book\templates\book_reviews.html:32
+msgid "Delete Review"
+msgstr "Eliminar reseña"
+
+#: .\book\templates\book_reviews.html:38
+msgid "No reviews yet for this book. Be the first to write one!"
+msgstr "Aun no hay reseñas para este libro. ¡Se el primero en agregar una!"
+
+#: .\book\templates\book_reviews.html:42
+msgid "Add a Review"
+msgstr "Agregar una reseña"
+
+#: .\book\templates\book_reviews.html:48
+msgid "Submit Review"
+msgstr "Enviar reseña"
+
+#: .\book\templates\book_reviews.html:51
+msgid "You need to be logged in to add a review."
+msgstr "Debes iniciar sesión para agregar una reseña"
+
+#: .\book\templates\book_search.html:6
+msgid "To search for book's disponibility"
+msgstr "Buscar disponibilidad de libros"
+
+#: .\book\templates\book_search.html:31
+msgid "Year"
+msgstr "Año"
+
+#: .\book\templates\book_search.html:40
+msgid "To look in Open Library"
+msgstr "Ver en Open Library"
+
+#: .\book\templates\book_status_list.html:12
+msgid "📘 To Read"
+msgstr "📘 Por leer"
+
+#: .\book\templates\book_status_list.html:14
+msgid "📖 Reading"
+msgstr "📖 Leyendo"
+
+#: .\book\templates\book_status_list.html:16
+msgid "📕 Read"
+msgstr "📕 Leído"
+
+#: .\book\templates\book_status_list.html:38
+msgid "There are not books for this section"
+msgstr "No hay libros para esta sección"
+
+#: .\book\templates\favorite_books.html:15 .\book\templates\home.html:47
+msgid "Book Link"
+msgstr "Enlace del libro"
+
+#: .\book\templates\home.html:14 .\recommendations\templates\survey.html:13
+msgid "For every curious mind, we find a story waiting to be read."
+msgstr "Para cada mente curiosa, encontramos una historia esperando ser leída."
+
+#: .\book\templates\home.html:15
+msgid "Discover the perfect book for every moment"
+msgstr "Descubre el libro perfecto para cada momento"
+
+#: .\book\templates\home.html:20
+msgid "Search for Book:"
+msgstr "Buscar libro"
+
+#: .\book\templates\home.html:23
+msgid "Search"
+msgstr "Buscar"
+
+#: .\book\templates\home.html:26
+msgid "Searching for:"
+msgstr "Buscando por"
+
+#: .\book\templates\home.html:45
+msgid "View Reviews"
+msgstr "Ver reseñas"
+
+#: .\book\templates\home.html:58
+msgid "Reading Status:"
+msgstr "Estado de lectura"
+
+#: .\book\templates\home.html:60
+msgid "Choose status"
+msgstr "Selecciona estado"
+
+#: .\book\templates\home.html:61
+msgid "To Read"
+msgstr "Por leer"
+
+#: .\book\templates\home.html:62
+msgid "Reading"
+msgstr "Leyendo"
+
+#: .\book\templates\home.html:63
+msgid "Read"
+msgstr "Leído"
+
+#: .\recommendations\templates\history_of_recommendations.html:20
+msgid "You don't have recommendations now"
+msgstr "No tienes recomendaciones ahora"
+
+#: .\recommendations\templates\recommendationsBooks.html:8
+msgid "Recommended Books"
+msgstr "Libros recomendados"
+
+#: .\recommendations\templates\recommendationsBooks.html:20
+msgid "Similarity:"
+msgstr "Similitud"
+
+#: .\recommendations\templates\recommendationsBooks.html:38
+msgid "Sing Up"
+msgstr "Registrarse"
+
+#: .\recommendations\templates\recommendationsBooks.html:38
+msgid "to rate this book."
+msgstr "para calificar este libro"
+
+#: .\recommendations\templates\recommendationsBooks.html:47
+msgid "No recommendations found"
+msgstr "No se encontraron recomendaciones"
+
+#: .\recommendations\templates\recommendationsBooks.html:54
+msgid "Share recommendations"
+msgstr "Compartir recomendaciones"
+
+#: .\recommendations\templates\recommendationsBooks.html:60
+msgid "Take the survey again"
+msgstr "Realizar la encuesta nuevamente"
+
+#: .\recommendations\templates\survey.html:14
+msgid "Book Recommendation Survey"
+msgstr "Encuesta de recomendación de libros"
+
+#: .\recommendations\templates\survey.html:20
+msgid "Preferred Genre:"
+msgstr "Genero preferido"
+
+#: .\recommendations\templates\survey.html:23
+msgid "Fiction"
+msgstr "Ficción"
+
+#: .\recommendations\templates\survey.html:24
+msgid "Non-Fiction"
+msgstr "No ficción"
+
+#: .\recommendations\templates\survey.html:25
+msgid "Science Fiction"
+msgstr "Ciencia ficción"
+
+#: .\recommendations\templates\survey.html:26
+msgid "Fantasy"
+msgstr "Fantasia"
+
+#: .\recommendations\templates\survey.html:27
+msgid "Mystery"
+msgstr "Misterio"
+
+#: .\recommendations\templates\survey.html:28
+msgid "Biography"
+msgstr "Biografía"
+
+#: .\recommendations\templates\survey.html:29
+msgid "Romance"
+msgstr "Romance"
+
+#: .\recommendations\templates\survey.html:30
+msgid "Self-help and Personal Development"
+msgstr "Autoayuda y desarrollo personal"
+
+#: .\recommendations\templates\survey.html:35
+msgid "Reading Size:"
+msgstr "Tamaño de lectura"
+
+#: .\recommendations\templates\survey.html:37
+msgid "Short reading (less than 50 pages)"
+msgstr "Lecturas cortas (menos de 50 paginas)"
+
+#: .\recommendations\templates\survey.html:38
+msgid "Medium reading (between 50 and 200 pages)"
+msgstr "Lecturas medianas (entre 50 y 200 paginas)"
+
+#: .\recommendations\templates\survey.html:39
+msgid "Long reading (more than 200 pages)"
+msgstr "Lecturas largas (mas de 200 paginas)"
+
+#: .\recommendations\templates\survey.html:44
+msgid "Favorite Authors:"
+msgstr "Autores favoritos"
+
+#: .\recommendations\templates\survey.html:50
+msgid "Type of Fiction:"
+msgstr "Tipo de ficción"
+
+#: .\recommendations\templates\survey.html:52
+msgid "Contemporary"
+msgstr "Contemporánea"
+
+#: .\recommendations\templates\survey.html:53
+msgid "Classic"
+msgstr "Clasica"
+
+#: .\recommendations\templates\survey.html:58
+msgid "Recent Books You Enjoyed:"
+msgstr "Libros recientes que disfrutaste"
+
+#: .\recommendations\templates\survey.html:63
+msgid "Get Recommendations"
+msgstr "Obtener recomendaciones"

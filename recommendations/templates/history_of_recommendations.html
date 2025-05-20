@@ -11,7 +11,7 @@
         <li>
           <strong>{{ recommendation.book.title }}</strong>
           {% if recommendation.rating %}
-            {%trans Rating: {{%trans recommendation.rating %}}}
+            {%trans Rating: %}{{ recommendation.rating }}
           {% endif %}
         </li>
       {% endfor %}
