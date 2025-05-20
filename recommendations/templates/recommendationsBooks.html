@@ -5,7 +5,7 @@
 <div class="container mt-4">
 
     {% if top_recommendations %}
-        <h2 class="text-center">Recommended Books</h2>
+        <h2 class="text-center">{%trans "Recommended Books" %}</h2>
 
         <div class="row">
             {% for book, score in top_recommendations %}
@@ -14,10 +14,10 @@
                     <img src="{{ book.image.url }}" class="card-img-top" alt="{{ book.title }}">
                     <div class="card-body">
                         <h5 class="card-title text-center">{{ book.title }}</h5>
-                        <p class="card-text"><strong>Synopsis:</strong> {{ book.synopsis }}</p>
-                        <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
+                        <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{%trans book.synopsis %}}</p>
+                        <p class="card-text"><strong>{%trans "Genre:" %}</strong> {{%trans book.genre %}}</p>
                         <p class="card-text text-muted">
-                            <strong>Similarity:</strong> {{ score|floatformat:2 }}
+                            <strong>{%trans "Similarity:" %}</strong> {{ score|floatformat:2 }}
                         </p>
 
                         {% if user.is_authenticated %}
@@ -35,7 +35,7 @@
                         </form>
                         {% else %}
                         <p class="text-center text-muted mt-2">
-                            <a href="{% url 'signupaccount' %}">Regístrate</a> para calificar este libro.
+                            <a href="{% url 'signupaccount' %}">{%trans "Sing Up" %}</a>{%trans "to rate this book." %}
                         </p>
                         {% endif %}
                     </div>
@@ -44,20 +44,20 @@
             {% endfor %}
         </div>
     {% else %}
-        <h2 class="text-center text-danger">No recommendations found</h2>
+        <h2 class="text-center text-danger">{%trans "No recommendations found" %}</h2>
     {% endif %}
 
     
     {% if share_url %}
     <div class="text-center my-3">
         <button id="share-btn" class="btn btn-success">
-            Share recommendations 
+            {%trans "Share recommendations" %} 
         </button>
     </div>
     {% endif %}
 
     <div class="text-center mt-3">
-        <a href="{% url 'survey' %}" class="btn btn-secondary">Take the survey again</a>
+        <a href="{% url 'survey' %}" class="btn btn-secondary">{%trans "Take the survey again" %}</a>
     </div>
 </div>
 
@@ -73,9 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
     shareBtn.addEventListener('click', async () => {
         try {
             await navigator.clipboard.writeText(shareUrl);
-            alert('¡Enlace copiado al portapapeles! Ahora puedes compartirlo donde quieras.');
+            alert('The link was copied on the clipboard, now you can share');
         } catch (err) {
-            alert('No se pudo copiar el enlace. Intenta manualmente: ' + shareUrl);
+            alert('The link wasn not copied try manually: ' + shareUrl);
         }
     });
 });

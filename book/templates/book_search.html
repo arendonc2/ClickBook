@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load i18n %}
 <div class="container mt-4">
-  <h2 class="mb-4">Buscar disponibilidad de libros</h2>
+  <h2 class="mb-4">{%trans "To search for book's disponibility" %}</h2>
 
   <form method="post" class="mb-4">
     {% csrf_token %}
@@ -25,18 +26,18 @@
         <div class="col-md-9">
           <div class="card-body">
             <h5 class="card-title">{{ availability_data.title }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Autor: {{ availability_data.authors|join:", " }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{%trans "Author: "{{ availability_data.authors|join:", " }}}</h6>
             {% if availability_data.year %}
-              <p class="card-text"><strong>Año:</strong> {{ availability_data.year }}</p>
+              <p class="card-text"><strong>{%trans "Year" %}:</strong> {{ availability_data.year }}</p>
             {% endif %}
             {% if availability_data.synopsis %}
-              <p class="card-text"><strong>Sinopsis:</strong> {{ availability_data.synopsis }}</p>
+              <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{%trans availability_data.synopsis %}}</p>
             {% endif %}
             <p class="card-text">
-              <strong>Disponibilidad:</strong> {{ availability_data.availability }}
+              <strong>{%trans Availability %}:</strong> {{ availability_data.availability }}
             </p>
             {% if availability_data.url %}
-              <a href="{{ availability_data.url }}" class="btn btn-outline-success" target="_blank">Ver en Open Library</a>
+              <a href="{{ availability_data.url }}" class="btn btn-outline-success" target="_blank">{%trans "To look in Open Library" %}</a>
             {% endif %}
           </div>
         </div>

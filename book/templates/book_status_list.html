@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load i18n %}
 <div class="container py-4">
-    <h1 class="mb-5 text-center"> Your Book Status</h1>
+    <h1 class="mb-5 text-center">{% "Your Book Status" %}</h1>
 
     {% for status, books in books_by_status.items %}
         <div class="my-5">
             <h2 class="section-title display-5 fw-bold text-dark mb-4">
                 {% if status == 'to_read' %}
-                    📘 To Read
+                    {%trans "📘 To Read" %}
                 {% elif status == 'reading' %}
-                    📖 Reading
+                    {%trans "📖 Reading" %}
                 {% elif status == 'read' %}
-                    📕 Read
+                    {%trans "📕 Read" %}
                 {% endif %}
             </h2>
 
@@ -34,7 +35,7 @@
                     {% endfor %}
                 </div>
             {% else %}
-                <p class="text-muted">Aún no hay libros para esta sección.</p>
+                <p class="text-muted">{%trans "There are not books for this section" %}</p>
             {% endif %}
         </div>
     {% endfor %}

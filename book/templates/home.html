@@ -2,6 +2,7 @@
 {% load static %}
 {% load custom_tags %}
 {% block content %}
+{% load i18n %}
 <head>
     <meta name="csrf-token" content="{{ csrf_token }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">  <!-- Updated Bootstrap version -->
@@ -10,19 +11,19 @@
 </head>
 
 <div class="container">
-    <h1 class="title">For every curious mind, we find a story waiting to be read.</h1>
-    <h1 class="title">Discover the perfect book for every moment</h1>
+    <h1 class="title">{%trans "For every curious mind, we find a story waiting to be read." %}</h1>
+    <h1 class="title">{%trans "Discover the perfect book for every moment" %}</h1>
 
     
     <form action="" class="mt-4">
         <div class="mb-3">
-            <label for="searchBook" class="form-label">Search for Book:</label>
+            <label for="searchBook" class="form-label">{%trans "Search for Book:" %}</label>
             <input type="text" class="form-control" name="searchBook" />
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary">{%trans "Search" %}</button>
     </form>
 
-    <p class="mt-3">Searching for: <strong>{{ searchTerm }}</strong></p>
+    <p class="mt-3">{%trans "Searching for:" %} <strong>{{%trans searchTerm %}}</strong></p>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for book in books %}
@@ -36,14 +37,14 @@
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title fw-bold">{{ book.title }}</h5>
-                    <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
-                    <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
-                    <p class="card-text"><strong>Synopsis:</strong> {{ book.synopsis }}</p>
+                    <p class="card-text"><strong>{%trans "Author:" %}</strong> {{ book.author }}</p>
+                    <p class="card-text"><strong>{%trans "Genre:" %}</strong> {{%trans book.genre %}}</p>
+                    <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{%trans book.synopsis %}}</p>
                     
                    
-                    <a href="{% url 'book_reviews' book.id %}" class="btn btn-primary">View Reviews</a>
+                    <a href="{% url 'book_reviews' book.id %}" class="btn btn-primary">{%trans "View Reviews" %}</a>
                     {% if book.url %}
-                        <a href="{{ book.url }}" class="btn btn-primary">Book Link</a>
+                        <a href="{{ book.url }}" class="btn btn-primary">{%trans "Book Link" %}</a>
                     {% endif %}
 
                     {% if user.is_authenticated %}
@@ -54,12 +55,12 @@
 
                         
                         <div class="mt-2">
-                            <label for="status-select-{{ book.id }}" class="form-label">Reading Status:</label>
+                            <label for="status-select-{{ book.id }}" class="form-label">{%trans "Reading Status:" %}</label>
                             <select class="form-select book-status-select" data-book-id="{{ book.id }}">
-                                <option value="" {% if not book_statuses|get_item:book.id %}selected{% endif %}>Choose status</option>
-                                <option value="to_read" {% if book_statuses|get_item:book.id == 'to_read' %}selected{% endif %}>To Read</option>
-                                <option value="reading" {% if book_statuses|get_item:book.id == 'reading' %}selected{% endif %}>Reading</option>
-                                <option value="read" {% if book_statuses|get_item:book.id == 'read' %}selected{% endif %}>Read</option>
+                                <option value="" {% if not book_statuses|get_item:book.id %}selected{% endif %}>{%trans "Choose status" %}</option>
+                                <option value="to_read" {% if book_statuses|get_item:book.id == 'to_read' %}selected{% endif %}>{%trans "To Read" %}</option>
+                                <option value="reading" {% if book_statuses|get_item:book.id == 'reading' %}selected{% endif %}>{%trans "Reading" %}</option>
+                                <option value="read" {% if book_statuses|get_item:book.id == 'read' %}selected{% endif %}>{%trans "Read" %}</option>
                             </select>
                         </div>
                     {% endif %}

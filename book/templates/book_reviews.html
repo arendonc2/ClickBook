@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">{{ book.title }} - Reviews</h1>
+    <h1 class="mb-4">{{%trans book.title %}} - Reviews</h1>
     
     <div class="card mb-4">
         <div class="card-body">
-            <h5 class="card-title">{{ book.title }}</h5>
-            <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
-            <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
-            <p class="card-text"><strong>Synopsis:</strong> {{ book.synopsis }}</p>
+            <h5 class="card-title">{{%trans book.title %}}</h5>
+            <p class="card-text"><strong>{%trans "Author:" %}</strong> {{%trans book.author %}}</p>
+            <p class="card-text"><strong>{%trans "Genre:" %}</strong> {{%trans book.genre %}}</p>
+            <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{%trans book.synopsis %}}</p>
             {% if book.image and book.image.url %}
                 <img src="{{ book.image.url }}" alt="{{ book.title }}" class="img-fluid">
             {% else %}
@@ -19,35 +20,35 @@
         </div>
     </div>
 
-    <h2>Reviews</h2>
+    <h2>{%trans "Reviews" %}</h2>
     {% if reviews %}
         <div class="list-group">
             {% for review in reviews %}
                 <div class="list-group-item">
-                    <h5 class="mb-1">{{ review.user.username }}</h5>
-                    <p class="mb-1">{{ review.content }}</p>
-                    <small class="text-muted">Posted on {{ review.created_at|date:"F j, Y, g:i a" }}</small>
+                    <h5 class="mb-1">{{%trans review.user.username %}}</h5>
+                    <p class="mb-1">{{%trans review.content %}}</p>
+                    <small class="text-muted">{%trans "Posted on "{{%trans review.created_at|date:"F j, Y, g:i a" %}}}</small>
                     {% if user.is_authenticated and review.user == user %}
-                        <button class="btn btn-danger btn-sm mt-2 delete-review" data-review-id="{{ review.id }}">Delete Review</button>
+                        <button class="btn btn-danger btn-sm mt-2 delete-review" data-review-id="{{ review.id }}">{%trans "Delete Review" %}</button>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
     {% else %}
-        <p>No reviews yet for this book. Be the first to write one!</p>
+        <p>{%trans "No reviews yet for this book. Be the first to write one!" %}</p>
     {% endif %}
 
     {% if user.is_authenticated %}
-        <h3 class="mt-4">Add a Review</h3>
+        <h3 class="mt-4">{%trans "Add a Review" %}</h3>
         <form id="review-form" method="post" action="{% url 'add_review' book.id %}">
             {% csrf_token %}
  <div class="mb-3">
                 <textarea class="form-control" name="content" rows="3" placeholder="Write your review..." required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit Review</button>
+            <button type="submit" class="btn btn-primary">{%trans "Submit Review" %}</button>
         </form>
     {% else %}
-        <p class="mt-3">You need to be logged in to add a review.</p>
+        <p class="mt-3">{%trans "You need to be logged in to add a review." %}</p>
     {% endif %}
 </div>
 

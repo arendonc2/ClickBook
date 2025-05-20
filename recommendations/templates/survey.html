@@ -10,57 +10,57 @@
 </head>
 
 <div class="container mt-4">
-    <h1 class="text-center">For every curious mind, we find a story waiting to be read.</h1>
-    <h1 class="text-center">Book Recommendation Survey</h1>
+    <h1 class="text-center">{%trans "For every curious mind, we find a story waiting to be read." %}/h1>
+    <h1 class="text-center">{%trans "Book Recommendation Survey" %}</h1>
     
     <form method="POST" class="mt-4">
         {% csrf_token %}
         
         <div class="mb-3">
-            <label for="genre" class="form-label">Preferred Genre:</label>
+            <label for="genre" class="form-label">{%trans "Preferred Genre:" %}</label>
             <select name="genre" id="genre" class="form-select">
               
-                <option value="fiction">Fiction</option>
-                <option value="nonfiction">Non-Fiction</option>
-                <option value="scifi">Science Fiction</option>
-                <option value="fantasy">Fantasy</option>
-                <option value="mystery">Mystery</option>
-                <option value="biography">Biography</option>
-                <option value="romance">Romance</option>
-                <option value="selfhelp">Self-help and Personal Development</option>
+                <option value="fiction">{%trans "Fiction" %}</option>
+                <option value="nonfiction">{%trans "Non-Fiction" %}</option>
+                <option value="scifi">{%trans "Science Fiction" %}</option>
+                <option value="fantasy">{%trans "Fantasy" %}</option>
+                <option value="mystery">{%trans "Mystery" %}</option>
+                <option value="biography">{%trans "Biography" %}</option>
+                <option value="romance">{%trans "Romance" %}</option>
+                <option value="selfhelp">{%trans "Self-help and Personal Development" %}</option>
             </select>
         </div>
 
         <div class="mb-3">
-            <label for="readings_size" class="form-label">Reading Size:</label>
+            <label for="readings_size" class="form-label">{%trans "Reading Size:" %}</label>
             <select name="readings_size" id="readings_size" class="form-select">
-                <option value="short_readings">Short reading (less than 50 pages)</option>
-                <option value="medium_readings">Medium reading (between 50 and 200 pages)</option>
-                <option value="long_readings">Long reading (more than 200 pages)</option>
+                <option value="short_readings">{%trans "Short reading (less than 50 pages)" %}</option>
+                <option value="medium_readings">{%trans "Medium reading (between 50 and 200 pages)" %}</option>
+                <option value="long_readings">{%trans "Long reading (more than 200 pages)" %}</option>
             </select>
         </div>
 
         <div class="mb-3">
-            <label for="favorite_authors" class="form-label">Favorite Authors:</label>
+            <label for="favorite_authors" class="form-label">{%trans "Favorite Authors:" %}</label>
             <input type="text" name="favorite_authors" id="favorite_authors" class="form-control" 
                    placeholder="Enter authors separated by commas">
         </div>
 
         <div class="mb-3">
-            <label for="fiction_type" class="form-label">Type of Fiction:</label>
+            <label for="fiction_type" class="form-label">{%trans "Type of Fiction:" %}</label>
             <select name="fiction_type" id="fiction_type" class="form-select">
-                <option value="contemporary">Contemporary</option>
-                <option value="classic">Classic</option>
+                <option value="contemporary">{%trans "Contemporary" %}</option>
+                <option value="classic">{%trans "Classic" %}</option>
             </select>
         </div>
 
         <div class="mb-3">
-            <label for="recent_books" class="form-label">Recent Books You Enjoyed:</label>
+            <label for="recent_books" class="form-label">{%trans "Recent Books You Enjoyed:" %}</label>
             <input type="text" name="recent_books" id="recent_books" class="form-control" 
                    placeholder="Enter book titles separated by commas">
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Get Recommendations</button>
+        <button type="submit" class="btn btn-primary w-100">{%trans "Get Recommendations" %}</button>
     </form>
 </div>
 

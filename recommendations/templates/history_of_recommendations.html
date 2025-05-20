@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
-<h2>📚 History of recommendations</h2>
+<h2>{% trans "📚 History of recommendations" %  }</h2>
 
   {% if recommendations %}
     <ul>
@@ -10,13 +11,13 @@
         <li>
           <strong>{{ recommendation.book.title }}</strong>
           {% if recommendation.rating %}
-            – Rating: {{ recommendation.rating }}
+            {%trans Rating: {{%trans recommendation.rating %}}}
           {% endif %}
         </li>
       {% endfor %}
     </ul>
   {% else %}
-    <p>No has hecho recomendaciones aún.</p>
+    <p>{%trans "You don't have recommendations now" %}</p>
   {% endif %}
 <link rel="stylesheet" href="{% static 'css/rating.css' %}">
 <script src="{% static 'js/rating.js' %}"></script>
