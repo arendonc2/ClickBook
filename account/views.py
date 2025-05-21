@@ -38,3 +38,22 @@ def loginaccount(request):
         else:
             login(request, user)
             return redirect('home')
+
+def reset_password_manual(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if new_password != confirm_password:
+            return render(request, 'reset_password_manual.html', {'error': 'Las contraseñas no coinciden.'})
+
+        try:
+            user = User.objects.get(username=username)
+            user.set_password(new_password)
+            user.save()
+            return redirect('loginaccount')
+        except User.DoesNotExist:
+            return render(request, 'reset_password_manual.html', {'error': 'El usuario no existe.'})
+
+    return render(request, 'reset_password_manual.html')
