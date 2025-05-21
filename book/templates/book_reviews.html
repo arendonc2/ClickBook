@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">{{%trans book.title %}} - Reviews</h1>
+    <h1 class="mb-4">{{ book.title %}} - Reviews</h1>
     
     <div class="card mb-4">
         <div class="card-body">
@@ -27,7 +27,7 @@
                 <div class="list-group-item">
                     <h5 class="mb-1">{{ review.user.username }}</h5>
                     <p class="mb-1">{{ review.content }}</p>
-                    <small class="text-muted">{%trans "Posted on "}{{ review.created_at|date:"F j, Y, g:i a" }}</small>
+                    <small class="text-muted">{%trans "Posted on " %}{{ review.created_at|date:"F j, Y, g:i a" }}</small>
                     {% if user.is_authenticated and review.user == user %}
                         <button class="btn btn-danger btn-sm mt-2 delete-review" data-review-id="{{ review.id }}">{%trans "Delete Review" %}</button>
                     {% endif %}
