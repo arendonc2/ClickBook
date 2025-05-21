@@ -38,33 +38,31 @@
 
      
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <!-- Enlaces de navegación a la izquierda -->
         <div class="navbar-nav d-flex align-items-center">
-
           <a class="nav-link" href="{% url 'survey' %}">{%trans "Obtain recommendations" %}</a>
           <a class="nav-link" href="{% url 'favorite_books' %}">{%trans "Favorite Books" %}</a>
           <a class="nav-link" href="{% url 'book_search' %}">{%trans "Disponibilidad de libro" %}</a>
-      <div class="nav-item dropdown">
-              <li class="dropdown-item px-3">
-                  <form action="{% url 'set_language' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <label for="language-select">{% trans "Select language:" %}</label>
-                    <select name="language" id="language-select" class="form-select form-select-sm">
-                      <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-                      <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary mt-2">{% trans "Change language" %}</button>
-                  </form>
-                </li>
-          </div>
-
+        </div>
+      
+        <!-- Enlaces a la derecha -->
+        <div class="navbar-nav ms-auto d-flex align-items-center">
+        
+          <!-- Selector de idioma a la derecha -->
+          <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center me-3">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <label for="language-select" class="me-2 mb-0">{% trans "Language:" %}</label>
+            <select name="language" id="language-select" class="form-select form-select-sm me-2">
+              <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+              <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+            </select>
+            <button type="submit" class="btn btn-outline-primary btn-sm">{% trans "Change" %}</button>
+          </form>
+        
           {% if user.is_authenticated %}
-            
             <a class="nav-link" href="{% url 'book_status_list' %}">{%trans "Book Status" %}</a>
-           
-
             <a class="nav-link" href="{% url 'logoutaccount' %}">{%trans "Logout" %}({{ user.username }})</a>
-
             <div class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
                  data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,14 +76,15 @@
                 </li>
               </ul>
             </div>
-
           {% else %}
             <a class="nav-link" href="{% url 'loginaccount' %}">{%trans "Login" %}</a>
             <a class="nav-link" href="{% url 'signupaccount' %}">{%trans "Sign Up" %}</a>
           {% endif %}
-
+          
         </div>
       </div>
+
+
 
     </div>
   </nav>
