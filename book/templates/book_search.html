@@ -26,12 +26,12 @@
         <div class="col-md-9">
           <div class="card-body">
             <h5 class="card-title">{{ availability_data.title }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{%trans "Author: "{{ availability_data.authors|join:", " }}}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{%trans "Author: " %}{{ availability_data.authors|join:", " }}</h6>
             {% if availability_data.year %}
               <p class="card-text"><strong>{%trans "Year" %}:</strong> {{ availability_data.year }}</p>
             {% endif %}
             {% if availability_data.synopsis %}
-              <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{%trans availability_data.synopsis %}}</p>
+              <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{ availability_data.synopsis }}</p>
             {% endif %}
             <p class="card-text">
               <strong>{%trans Availability %}:</strong> {{ availability_data.availability }}

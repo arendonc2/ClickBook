@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mt-4">
@@ -14,8 +15,8 @@
                     <img src="{{ book.image.url }}" class="card-img-top" alt="{{ book.title }}">
                     <div class="card-body">
                         <h5 class="card-title text-center">{{ book.title }}</h5>
-                        <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{%trans book.synopsis %}}</p>
-                        <p class="card-text"><strong>{%trans "Genre:" %}</strong> {{%trans book.genre %}}</p>
+                        <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{ book.synopsis }}</p>
+                        <p class="card-text"><strong>{%trans "Genre:" %}</strong> {{ book.genre }}</p>
                         <p class="card-text text-muted">
                             <strong>{%trans "Similarity:" %}</strong> {{ score|floatformat:2 }}
                         </p>
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await navigator.clipboard.writeText(shareUrl);
             alert('The link was copied on the clipboard, now you can share');
         } catch (err) {
-            alert('The link wasn not copied try manually: ' + shareUrl);
+            alert('The link was not copied try manually: ' + shareUrl);
         }
     });
 });

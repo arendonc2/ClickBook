@@ -8,10 +8,10 @@
     
     <div class="card mb-4">
         <div class="card-body">
-            <h5 class="card-title">{{%trans book.title %}}</h5>
-            <p class="card-text"><strong>{%trans "Author:" %}</strong> {{%trans book.author %}}</p>
-            <p class="card-text"><strong>{%trans "Genre:" %}</strong> {{%trans book.genre %}}</p>
-            <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{%trans book.synopsis %}}</p>
+            <h5 class="card-title">{{ book.title }}</h5>
+            <p class="card-text"><strong>{%trans "Author:" %}</strong> {{ book.author }}</p>
+            <p class="card-text"><strong>{%trans "Genre:" %}</strong> {{ book.genre }}</p>
+            <p class="card-text"><strong>{%trans "Synopsis:" %}</strong> {{ book.synopsis }}</p>
             {% if book.image and book.image.url %}
                 <img src="{{ book.image.url }}" alt="{{ book.title }}" class="img-fluid">
             {% else %}
@@ -25,9 +25,9 @@
         <div class="list-group">
             {% for review in reviews %}
                 <div class="list-group-item">
-                    <h5 class="mb-1">{{%trans review.user.username %}}</h5>
-                    <p class="mb-1">{{%trans review.content %}}</p>
-                    <small class="text-muted">{%trans "Posted on "{{%trans review.created_at|date:"F j, Y, g:i a" %}}}</small>
+                    <h5 class="mb-1">{{ review.user.username }}</h5>
+                    <p class="mb-1">{{ review.content }}</p>
+                    <small class="text-muted">{%trans "Posted on "}{{ review.created_at|date:"F j, Y, g:i a" }}</small>
                     {% if user.is_authenticated and review.user == user %}
                         <button class="btn btn-danger btn-sm mt-2 delete-review" data-review-id="{{ review.id }}">{%trans "Delete Review" %}</button>
                     {% endif %}

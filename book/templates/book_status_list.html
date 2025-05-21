@@ -3,7 +3,7 @@
 {% block content %}
 {% load i18n %}
 <div class="container py-4">
-    <h1 class="mb-5 text-center">{% "Your Book Status" %}</h1>
+    <h1 class="mb-5 text-center">{%trans "Your Book Status" %}</h1>
 
     {% for status, books in books_by_status.items %}
         <div class="my-5">

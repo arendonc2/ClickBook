@@ -57,9 +57,23 @@
                 {%trans "Profile" %}
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{% url 'history_of_recommendations' %}">{%trans "History of recommendations" %}</a></li>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
-                <li><a class="dropdown-item" href="#">{%trans "Select language (Not available now)" %}</a></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'history_of_recommendations' %}">
+                    {% trans "History of recommendations" %}
+                  </a>
+                </li>
+                <li class="dropdown-item px-3">
+                  <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <label for="language-select">{% trans "Select language:" %}</label>
+                    <select name="language" id="language-select" class="form-select form-select-sm">
+                      <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                      <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary mt-2">{% trans "Change language" %}</button>
+                  </form>
+                </li>
               </ul>
             </div>
 

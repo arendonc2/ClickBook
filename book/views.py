@@ -5,9 +5,11 @@ from django.views.decorators.http import require_POST
 from .forms import BookSearchForm
 import requests
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import get_language
 
 def home(request):
     searchTerm = request.GET.get('searchBook')
+    print("Idioma activo:", get_language())
 
     if searchTerm:
         books = Book.objects.filter(title__icontains=searchTerm)
